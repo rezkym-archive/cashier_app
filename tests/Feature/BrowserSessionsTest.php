@@ -19,5 +19,11 @@ class BrowserSessionsTest extends TestCase
         Livewire::test(LogoutOtherBrowserSessionsForm::class)
                 ->set('password', 'password')
                 ->call('logoutOtherBrowserSessions');
+
+        // return assert session is empty
+        $this->assertEmpty($user->fresh()->tokens);
+
+
+
     }
 }

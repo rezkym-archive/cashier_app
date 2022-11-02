@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -15,6 +15,11 @@ class EmailVerificationTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Test that a user can render the email verification notice screen
+     *
+     * @return 200
+     */
     public function test_email_verification_screen_can_be_rendered()
     {
         if (! Features::enabled(Features::emailVerification())) {
@@ -28,6 +33,12 @@ class EmailVerificationTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /**
+     * Test that a user can verify their email address
+     *
+     * @return Tests\TestCase\markTestSkipped
+     * @return Tests\TestCase\assertTrue
+     */
     public function test_email_can_be_verified()
     {
         if (! Features::enabled(Features::emailVerification())) {
@@ -52,6 +63,12 @@ class EmailVerificationTest extends TestCase
         $response->assertRedirect(RouteServiceProvider::HOME.'?verified=1');
     }
 
+    /**
+     * Test that a user cannot verify their email address with an invalid hash
+     *
+     * @return Tests\TestCase\markTestSkipped
+     * @return Tests\TestCase\assertFalse
+     */
     public function test_email_can_not_verified_with_invalid_hash()
     {
         if (! Features::enabled(Features::emailVerification())) {

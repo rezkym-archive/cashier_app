@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -13,6 +13,11 @@ class UpdatePasswordTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Test that a user's password can be updated
+     *
+     * @return Tests\TestCase\assertTrue
+     */
     public function test_password_can_be_updated()
     {
         $this->actingAs($user = User::factory()->create());
@@ -28,6 +33,12 @@ class UpdatePasswordTest extends TestCase
         $this->assertTrue(Hash::check('new-password', $user->fresh()->password));
     }
 
+    /**
+     * Test that a user's password cannot be updated without a valid current password
+     *
+     * @return Tests\TestCase\assertHasErrors
+     * @return Tests\TestCase\assertTrue
+     */
     public function test_current_password_must_be_correct()
     {
         $this->actingAs($user = User::factory()->create());
@@ -44,6 +55,12 @@ class UpdatePasswordTest extends TestCase
         $this->assertTrue(Hash::check('password', $user->fresh()->password));
     }
 
+    /**
+     * Test that a user's password cannot be updated without a valid password confirmation
+     *
+     * @return Tests\TestCase\assertHasErrors
+     * @return Tests\TestCase\assertTrue
+     */
     public function test_new_passwords_must_match()
     {
         $this->actingAs($user = User::factory()->create());

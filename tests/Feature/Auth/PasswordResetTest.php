@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
@@ -13,6 +13,11 @@ class PasswordResetTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Test that a user can render the password reset request screen
+     *
+     * @return Tests\TestCase\assertStatus 200
+     */
     public function test_reset_password_link_screen_can_be_rendered()
     {
         if (! Features::enabled(Features::resetPasswords())) {
@@ -24,6 +29,13 @@ class PasswordResetTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /**
+     * Test that a user can request a password reset link
+     *
+     * @return Tests\TestCase\markTestSkipped
+     * @return Tests\TestCase\assertStatus 200
+     *
+     */
     public function test_reset_password_link_can_be_requested()
     {
         if (! Features::enabled(Features::resetPasswords())) {
@@ -41,6 +53,12 @@ class PasswordResetTest extends TestCase
         Notification::assertSentTo($user, ResetPassword::class);
     }
 
+    /**
+     * Test if user can render the password reset screen
+     *
+     * @return Tests\TestCase\markTestSkipped
+     * @return Tests\TestCase\assertStatus 200
+     */
     public function test_reset_password_screen_can_be_rendered()
     {
         if (! Features::enabled(Features::resetPasswords())) {
@@ -64,6 +82,12 @@ class PasswordResetTest extends TestCase
         });
     }
 
+    /**
+     * Test that a user can reset their password with valid token
+     *
+     * @return Tests\TestCase\markTestSkipped
+     * @return Tests\TestCase\assertSessionHasNoErrors True
+     */
     public function test_password_can_be_reset_with_valid_token()
     {
         if (! Features::enabled(Features::resetPasswords())) {
